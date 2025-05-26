@@ -74,6 +74,6 @@ jobs:
         run: |
           make test
         env:
-          SAKURA_SIMPLE_NOTIFICATION_GROUP_ID: ${{secrets.KMS_KEY_ID}}
+          SAKURACLOUD_KMS_KEY_ID: ${{secrets.KMS_KEY_ID}}
           SAKURACLOUD_ACCESS_TOKEN: ${{secrets.ACCESS_TOKEN}}
           SAKURACLOUD_ACCESS_TOKEN_SECRET: ${{secrets.ACCESS_TOKEN_SECRET}}
