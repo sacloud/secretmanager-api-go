@@ -72,6 +72,25 @@ func main() {
 
 [example_test.go](./example_test.go) も参照。
 
+### クライアントに設定を渡す
+
+`api-client-go` にある `ClientParams` オプションを `WithXXX` で指定可能です。
+
+```
+// API keysをコードから指定する例
+import (
+	// ...
+
+	client "github.com/sacloud/api-client-go"
+	sm "github.com/sacloud/secretmanager-api-go"
+)
+
+func main() {
+	client, err := sm.NewClient(client.WithApiKeys("your-token", "your-token-secret"))
+	// ...
+}
+```
+
 :warning:  v1.0に達するまでは互換性のない形で変更される可能性がありますのでご注意ください。
 
 ## ogenによるコード生成
