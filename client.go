@@ -26,8 +26,6 @@ import (
 // DefaultAPIRootURL デフォルトのAPIルートURL
 const DefaultAPIRootURL = "https://secure.sakura.ad.jp/cloud/zone/tk1a/api/cloud/1.1"
 
-// const DefaultAPIRootURL = "https://secure.sakura.ad.jp/cloud-test/zone/is1y/api/cloud/1.1"
-
 // UserAgent APIリクエスト時のユーザーエージェント
 var UserAgent = fmt.Sprintf(
 	"secretmanager-api-go/%s (%s/%s; +https://github.com/sacloud/secretmanager-api-go) %s",
@@ -47,12 +45,13 @@ func (ss DummySecuritySource) BasicAuth(ctx context.Context, operationName v1.Op
 	return v1.BasicAuth{Username: ss.Username, Password: ss.Password, Roles: nil}, nil
 }
 
-func NewClient() (*v1.Client, error) {
-	return NewClientWithApiUrl(DefaultAPIRootURL)
+func NewClient(params ...client.ClientParam) (*v1.Client, error) {
+	return NewClientWithApiUrl(DefaultAPIRootURL, params...)
 }
 
-func NewClientWithApiUrl(apiUrl string) (*v1.Client, error) {
-	c, err := client.NewClient(apiUrl, client.WithUserAgent(UserAgent))
+func NewClientWithApiUrl(apiUrl string, params ...client.ClientParam) (*v1.Client, error) {
+	params = append(params, client.WithUserAgent(UserAgent))
+	c, err := client.NewClient(apiUrl, params...)
 	if err != nil {
 		return nil, err
 	}
