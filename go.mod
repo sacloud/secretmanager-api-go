@@ -7,7 +7,7 @@ tool github.com/ogen-go/ogen/cmd/ogen
 require (
 	github.com/go-faster/errors v0.7.1
 	github.com/go-faster/jx v1.1.0
-	github.com/ogen-go/ogen v1.13.0
+	github.com/ogen-go/ogen v1.14.0
 	github.com/sacloud/api-client-go v0.3.0
 	github.com/stretchr/testify v1.10.0
 )
