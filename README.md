@@ -99,7 +99,7 @@ func main() {
 
 ```
 $ go get -tool github.com/ogen-go/ogen/cmd/ogen@latest
-$ go tool ogen -package v1 -target apis/v1 -clean -config ogen-config.yaml ./spec/openapi-fixed.json
+$ go tool ogen -package v1 -target apis/v1 -clean -config ogen-config.yaml ./openapi/openapi-fixed.json
 ```
 
 ## License
