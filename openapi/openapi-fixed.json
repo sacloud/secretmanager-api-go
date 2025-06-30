@@ -3,7 +3,7 @@
   "info": {
     "title": "SecretManager API",
     "version": "1.0.0",
-    "description": "さくらのクラウド SecretManager"
+    "description": "さくらのクラウド SecretManager API"
   },
   "servers": [
     {
