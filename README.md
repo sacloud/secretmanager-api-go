@@ -70,7 +70,7 @@ func main() {
 }
 ```
 
-[example_test.go](./example_test.go) も参照。
+[vaults_test.go](./vaults_test.go) / [secrets_test.go](./secrets_test.go) も参照。
 
 ### クライアントに設定を渡す
 
