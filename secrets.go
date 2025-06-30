@@ -45,7 +45,7 @@ func (op *secretOp) List(ctx context.Context) ([]v1.Secret, error) {
 	res, err := op.client.SecretmanagerVaultsSecretsList(ctx,
 		v1.SecretmanagerVaultsSecretsListParams{VaultResourceID: op.vaultId})
 	if err != nil {
-		return nil, err
+		return nil, NewError("List", err)
 	}
 
 	return res.Secrets, nil
@@ -56,7 +56,7 @@ func (op *secretOp) Create(ctx context.Context, request v1.CreateSecret) (*v1.Se
 		Secret: request,
 	}, v1.SecretmanagerVaultsSecretsCreateParams{VaultResourceID: op.vaultId})
 	if err != nil {
-		return nil, err
+		return nil, NewError("Create", err)
 	}
 
 	return &res.Secret, nil
@@ -72,14 +72,18 @@ func (op *secretOp) Unveil(ctx context.Context, request v1.Unveil) (*v1.Unveil, 
 		Secret: request,
 	}, v1.SecretmanagerVaultsSecretsUnveilParams{VaultResourceID: op.vaultId})
 	if err != nil {
-		return nil, err
+		return nil, NewError("Unveil", err)
 	}
 
 	return &res.Secret, nil
 }
 
 func (op *secretOp) Delete(ctx context.Context, request v1.DeleteSecret) error {
-	return op.client.SecretmanagerVaultsSecretsDestroy(ctx, &v1.WrappedDeleteSecret{
+	err := op.client.SecretmanagerVaultsSecretsDestroy(ctx, &v1.WrappedDeleteSecret{
 		Secret: request,
 	}, v1.SecretmanagerVaultsSecretsDestroyParams{VaultResourceID: op.vaultId})
+	if err != nil {
+		return NewError("Delete", err)
+	}
+	return nil
 }
