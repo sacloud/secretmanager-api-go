@@ -1,4 +1,4 @@
-// Copyright 2025- The sacloud/kms-api-go authors
+// Copyright 2025- The sacloud/secretmanager-api-go authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
