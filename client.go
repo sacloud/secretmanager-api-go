@@ -53,12 +53,12 @@ func NewClientWithApiUrl(apiUrl string, params ...client.ClientParam) (*v1.Clien
 	params = append(params, client.WithUserAgent(UserAgent))
 	c, err := client.NewClient(apiUrl, params...)
 	if err != nil {
-		return nil, err
+		return nil, NewError("NewClientWithApiUrl", err)
 	}
 
 	v1Client, err := v1.NewClient(c.ServerURL(), DummySecuritySource{Username: "", Password: ""}, v1.WithClient(c.NewHttpRequestDoer()))
 	if err != nil {
-		return nil, fmt.Errorf("failed to create secretmanager client: %w", err)
+		return nil, NewError("NewClientWithApiUrl", err)
 	}
 
 	return v1Client, nil
