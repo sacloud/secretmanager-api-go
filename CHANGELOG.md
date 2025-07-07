@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.2.1](https://github.com/sacloud/secretmanager-api-go/compare/v0.2.0...v0.2.1) - 2025-07-07
+- Use api-client-go's APIError by @repeatedly in https://github.com/sacloud/secretmanager-api-go/pull/13
+
 ## [v0.2.0](https://github.com/sacloud/secretmanager-api-go/compare/v0.1.1...v0.2.0) - 2025-07-01
 - govulncheckによるチェックを追加 by @repeatedly in https://github.com/sacloud/secretmanager-api-go/pull/8
 - go: bump github.com/ogen-go/ogen from 1.13.0 to 1.14.0 by @dependabot in https://github.com/sacloud/secretmanager-api-go/pull/7
