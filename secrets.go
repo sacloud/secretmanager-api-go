@@ -45,7 +45,7 @@ func (op *secretOp) List(ctx context.Context) ([]v1.Secret, error) {
 	res, err := op.client.SecretmanagerVaultsSecretsList(ctx,
 		v1.SecretmanagerVaultsSecretsListParams{VaultResourceID: op.vaultId})
 	if err != nil {
-		return nil, NewError("List", err)
+		return nil, createAPIError("List", err)
 	}
 
 	return res.Secrets, nil
@@ -56,7 +56,7 @@ func (op *secretOp) Create(ctx context.Context, request v1.CreateSecret) (*v1.Se
 		Secret: request,
 	}, v1.SecretmanagerVaultsSecretsCreateParams{VaultResourceID: op.vaultId})
 	if err != nil {
-		return nil, NewError("Create", err)
+		return nil, createAPIError("Create", err)
 	}
 
 	return &res.Secret, nil
@@ -72,7 +72,7 @@ func (op *secretOp) Unveil(ctx context.Context, request v1.Unveil) (*v1.Unveil, 
 		Secret: request,
 	}, v1.SecretmanagerVaultsSecretsUnveilParams{VaultResourceID: op.vaultId})
 	if err != nil {
-		return nil, NewError("Unveil", err)
+		return nil, createAPIError("Unveil", err)
 	}
 
 	return &res.Secret, nil
@@ -83,7 +83,7 @@ func (op *secretOp) Delete(ctx context.Context, request v1.DeleteSecret) error {
 		Secret: request,
 	}, v1.SecretmanagerVaultsSecretsDestroyParams{VaultResourceID: op.vaultId})
 	if err != nil {
-		return NewError("Delete", err)
+		return createAPIError("Delete", err)
 	}
 	return nil
 }

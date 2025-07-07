@@ -42,7 +42,7 @@ func NewVaultOp(client *v1.Client) VaultAPI {
 func (op *vaultOp) List(ctx context.Context) ([]v1.Vault, error) {
 	res, err := op.client.SecretmanagerVaultsList(ctx)
 	if err != nil {
-		return nil, NewError("List", err)
+		return nil, createAPIError("List", err)
 	}
 
 	return res.Vaults, nil
@@ -51,7 +51,7 @@ func (op *vaultOp) List(ctx context.Context) ([]v1.Vault, error) {
 func (op *vaultOp) Read(ctx context.Context, id string) (*v1.Vault, error) {
 	res, err := op.client.SecretmanagerVaultsRetrieve(ctx, v1.SecretmanagerVaultsRetrieveParams{ResourceID: id})
 	if err != nil {
-		return nil, NewError("Read", err)
+		return nil, createAPIError("Read", err)
 	}
 
 	return &res.Vault, nil
@@ -62,7 +62,7 @@ func (op *vaultOp) Create(ctx context.Context, request v1.CreateVault) (*v1.Crea
 		Vault: request,
 	})
 	if err != nil {
-		return nil, NewError("Create", err)
+		return nil, createAPIError("Create", err)
 	}
 
 	return &res.Vault, nil
@@ -73,7 +73,7 @@ func (op *vaultOp) Update(ctx context.Context, id string, request v1.Vault) (*v1
 		Vault: request,
 	}, v1.SecretmanagerVaultsUpdateParams{ResourceID: id})
 	if err != nil {
-		return nil, NewError("Update", err)
+		return nil, createAPIError("Update", err)
 	}
 
 	return &res.Vault, nil
@@ -82,7 +82,7 @@ func (op *vaultOp) Update(ctx context.Context, id string, request v1.Vault) (*v1
 func (op *vaultOp) Delete(ctx context.Context, id string) error {
 	err := op.client.SecretmanagerVaultsDestroy(ctx, v1.SecretmanagerVaultsDestroyParams{ResourceID: id})
 	if err != nil {
-		return NewError("Delete", err)
+		return createAPIError("Delete", err)
 	}
 	return nil
 }
