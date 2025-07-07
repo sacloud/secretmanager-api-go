@@ -3,6 +3,8 @@ package secretmanager
 import (
 	"errors"
 	"testing"
+
+	client "github.com/sacloud/api-client-go"
 )
 
 func TestError_Error(t *testing.T) {
@@ -51,5 +53,19 @@ func TestNewError(t *testing.T) {
 	err2 := NewError("msg only", nil)
 	if err2.msg != "msg only" || err2.err != nil {
 		t.Errorf("NewError() with nil err did not set fields correctly")
+	}
+}
+
+func TestNewAPIError(t *testing.T) {
+	baseErr := errors.New("base error")
+
+	err := NewAPIError("msg", 404, baseErr)
+	if !client.IsNotFoundError(err) {
+		t.Errorf("IsNotFoundError is true for NewAPIError with 404")
+	}
+
+	err2 := NewAPIError("msg", 503, nil)
+	if client.IsNotFoundError(err2) {
+		t.Errorf("IsNotFoundError is false for NewAPIError with 503")
 	}
 }

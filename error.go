@@ -14,6 +14,13 @@
 
 package secretmanager
 
+import (
+	"errors"
+
+	ogen "github.com/ogen-go/ogen/validate"
+	client "github.com/sacloud/api-client-go"
+)
+
 type Error struct {
 	msg string
 	err error
@@ -36,8 +43,20 @@ func (e *Error) Unwrap() error {
 }
 
 func NewError(msg string, err error) *Error {
-	if err == nil {
-		return &Error{msg: msg}
-	}
 	return &Error{msg: msg, err: err}
+}
+
+func NewAPIError(method string, code int, err error) *Error {
+	return &Error{msg: method, err: client.NewAPIError(code, "", err)}
+}
+
+// secretmanagerのOpenAPI定義でエラーケースが定義されていないので、現状はogenのエラーから状態を取り出す
+// NewAPIErrorは他のクライアントとインターフェイスを揃えるために維持し、別で生成関数を用意
+func createAPIError(method string, err error) error {
+	var unexpected *ogen.UnexpectedStatusCodeError
+	if errors.As(err, &unexpected) {
+		return NewAPIError(method, unexpected.StatusCode, err)
+	}
+
+	return NewAPIError(method, 0, err)
 }
