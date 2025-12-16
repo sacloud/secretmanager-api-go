@@ -46,10 +46,12 @@ func (ss DummySecuritySource) BasicAuth(ctx context.Context, operationName v1.Op
 	return v1.BasicAuth{Username: ss.Username, Password: ss.Password, Roles: nil}, nil
 }
 
+// Deprecated: この関数からは指定できない設定項目がある
 func NewClient(params ...client.ClientParam) (*v1.Client, error) {
 	return NewClientWithApiUrl(DefaultAPIRootURL, params...)
 }
 
+// Deprecated: この関数からは指定できない設定項目がある
 func NewClientWithApiUrl(apiUrl string, params ...client.ClientParam) (*v1.Client, error) {
 	params = append(params, client.WithUserAgent(UserAgent))
 	c, err := saclient.NewClient(apiUrl, params...)
