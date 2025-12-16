@@ -20,6 +20,7 @@ import (
 	"runtime"
 
 	client "github.com/sacloud/api-client-go"
+	"github.com/sacloud/saclient-go"
 	v1 "github.com/sacloud/secretmanager-api-go/apis/v1"
 )
 
@@ -51,12 +52,16 @@ func NewClient(params ...client.ClientParam) (*v1.Client, error) {
 
 func NewClientWithApiUrl(apiUrl string, params ...client.ClientParam) (*v1.Client, error) {
 	params = append(params, client.WithUserAgent(UserAgent))
-	c, err := client.NewClient(apiUrl, params...)
+	c, err := saclient.NewClient(apiUrl, params...)
 	if err != nil {
 		return nil, NewError("NewClientWithApiUrl", err)
 	}
 
-	v1Client, err := v1.NewClient(c.ServerURL(), DummySecuritySource{Username: "", Password: ""}, v1.WithClient(c.NewHttpRequestDoer()))
+	return NewClientWithSaclient(c)
+}
+
+func NewClientWithSaclient(sa saclient.ClientAPI) (*v1.Client, error) {
+	v1Client, err := v1.NewClient(sa.ServerURL(), DummySecuritySource{Username: "", Password: ""}, v1.WithClient(sa))
 	if err != nil {
 		return nil, NewError("NewClientWithApiUrl", err)
 	}
