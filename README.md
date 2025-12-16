@@ -15,12 +15,15 @@ import (
     "context"
     "fmt"
 
+	"github.com/sacloud/saclient-go"
     sm "github.com/sacloud/secretmanager-api-go"
     v1 "github.com/sacloud/secretmanager-api-go/apis/v1"
 )
 
+var theClient saclient.Client
+
 func main() {
-	client, err := sm.NewClient()
+	client, err := sm.NewClientWithSaclient(&theClient)
 	if err != nil {
 		panic(err)
 	}
@@ -74,19 +77,25 @@ func main() {
 
 ### クライアントに設定を渡す
 
-`api-client-go` にある `ClientParams` オプションを `WithXXX` で指定可能です。
+`saclient-go`側で設定を読み込み、渡します。
 
-```
+```go
 // API keysをコードから指定する例
 import (
+	"os"
 	// ...
 
-	client "github.com/sacloud/api-client-go"
+	"github.com/sacloud/saclient-go"
 	sm "github.com/sacloud/secretmanager-api-go"
 )
 
+var theClient saclient.Client
+
 func main() {
-	client, err := sm.NewClient(client.WithApiKeys("your-token", "your-token-secret"))
+	theClient.FlagSet().Parse(os.Args[1:])
+	theClient.SetEnviron(os.Environ())
+	theClient.SetWith(saclient.WithFavouringBearerAuthentication()) // etc.
+	client, err := sm.NewClientWithSaclient(&theClient)
 	// ...
 }
 ```
