@@ -20,7 +20,6 @@ var theClient saclient.Client
 
 func init() {
 	_ = theClient.SetWith(
-		saclient.WithTraceMode("all"),
 		saclient.WithRootURL(sm.DefaultAPIRootURL),
 		saclient.WithUserAgent(sm.UserAgent),
 	)
