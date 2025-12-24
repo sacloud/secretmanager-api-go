@@ -46,24 +46,19 @@ func (ss DummySecuritySource) BasicAuth(ctx context.Context, operationName v1.Op
 	return v1.BasicAuth{Username: ss.Username, Password: ss.Password, Roles: nil}, nil
 }
 
-// Deprecated: この関数からは指定できない設定項目がある
-func NewClient(params ...client.ClientParam) (*v1.Client, error) {
-	return NewClientWithApiUrl(DefaultAPIRootURL, params...)
-}
-
-// Deprecated: この関数からは指定できない設定項目がある
-func NewClientWithApiUrl(apiUrl string, params ...client.ClientParam) (*v1.Client, error) {
-	params = append(params, client.WithUserAgent(UserAgent))
-	c, err := saclient.NewClient(apiUrl, params...)
+func NewClient(sa saclient.ClientAPI) (*v1.Client, error) {
+	resetter := sa.(saclient.ClientOptionAPI)
+	client, err := resetter.DupWith(
+		// これはなにか:
+		// DummySecuritySource.BasicAuth()がBasic認証を生成
+		// しかし実際の通信で必ずしもBasic認証が使われると限らない
+		//　そのあたりをsaclient-go側で吸収させる設定が下記↓
+		saclient.WithForceAutomaticAuthentication(),
+	)
 	if err != nil {
 		return nil, NewError("NewClientWithApiUrl", err)
 	}
-
-	return NewClientWithSaclient(c)
-}
-
-func NewClientWithSaclient(sa saclient.ClientAPI) (*v1.Client, error) {
-	v1Client, err := v1.NewClient(sa.ServerURL(), DummySecuritySource{Username: "", Password: ""}, v1.WithClient(sa))
+	v1Client, err := v1.NewClient(client.ServerURL(), DummySecuritySource{}, v1.WithClient(client))
 	if err != nil {
 		return nil, NewError("NewClientWithApiUrl", err)
 	}
