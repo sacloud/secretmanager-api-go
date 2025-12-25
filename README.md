@@ -23,7 +23,7 @@ import (
 var theClient saclient.Client
 
 func main() {
-	client, err := sm.NewClientWithSaclient(&theClient)
+	client, err := sm.NewClient(&theClient)
 	if err != nil {
 		panic(err)
 	}
@@ -95,7 +95,7 @@ func main() {
 	theClient.FlagSet().Parse(os.Args[1:])
 	theClient.SetEnviron(os.Environ())
 	theClient.SetWith(saclient.WithFavouringBearerAuthentication()) // etc.
-	client, err := sm.NewClientWithSaclient(&theClient)
+	client, err := sm.NewClient(&theClient)
 	// ...
 }
 ```
