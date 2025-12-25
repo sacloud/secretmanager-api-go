@@ -18,7 +18,7 @@ func TestVaultAPI(t *testing.T) {
 	testutil.PreCheckEnvsFunc("SAKURACLOUD_ACCESS_TOKEN",
 		"SAKURACLOUD_ACCESS_TOKEN_SECRET", "SAKURACLOUD_KMS_KEY_ID")(t)
 
-	client, err := sm.NewClient()
+	client, err := sm.NewClient(&theClient)
 	require.NoError(t, err)
 
 	ctx := context.Background()

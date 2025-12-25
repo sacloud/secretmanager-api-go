@@ -11,15 +11,25 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/sacloud/packages-go/testutil"
+	"github.com/sacloud/saclient-go"
 	sm "github.com/sacloud/secretmanager-api-go"
 	v1 "github.com/sacloud/secretmanager-api-go/apis/v1"
 )
+
+var theClient saclient.Client
+
+func init() {
+	_ = theClient.SetWith(
+		saclient.WithRootURL(sm.DefaultAPIRootURL),
+		saclient.WithUserAgent(sm.UserAgent),
+	)
+}
 
 func TestSecretAPI(t *testing.T) {
 	testutil.PreCheckEnvsFunc("SAKURACLOUD_ACCESS_TOKEN",
 		"SAKURACLOUD_ACCESS_TOKEN_SECRET", "SAKURACLOUD_KMS_KEY_ID")(t)
 
-	client, err := sm.NewClient()
+	client, err := sm.NewClient(&theClient)
 	require.NoError(t, err)
 
 	ctx := context.Background()
