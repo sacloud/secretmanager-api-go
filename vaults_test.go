@@ -15,14 +15,14 @@ import (
 )
 
 func TestVaultAPI(t *testing.T) {
-	testutil.PreCheckEnvsFunc("SAKURACLOUD_ACCESS_TOKEN",
-		"SAKURACLOUD_ACCESS_TOKEN_SECRET", "SAKURACLOUD_KMS_KEY_ID")(t)
+	testutil.PreCheckEnvsFunc("SAKURA_ACCESS_TOKEN",
+		"SAKURA_ACCESS_TOKEN_SECRET", "SAKURA_KMS_KEY_ID")(t)
 
 	client, err := sm.NewClient(&theClient)
 	require.NoError(t, err)
 
 	ctx := context.Background()
-	keyId := os.Getenv("SAKURACLOUD_KMS_KEY_ID")
+	keyId := os.Getenv("SAKURA_KMS_KEY_ID")
 	vaultOp := sm.NewVaultOp(client)
 
 	resCreate, err := vaultOp.Create(ctx, v1.CreateVault{
