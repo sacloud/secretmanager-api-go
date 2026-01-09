@@ -49,6 +49,7 @@ func (ss DummySecuritySource) BasicAuth(ctx context.Context, operationName v1.Op
 func NewClient(sa saclient.ClientAPI) (*v1.Client, error) {
 	resetter := sa.(saclient.ClientOptionAPI)
 	client, err := resetter.DupWith(
+		saclient.WithUserAgent(UserAgent),
 		// これはなにか:
 		// DummySecuritySource.BasicAuth()がBasic認証を生成
 		// しかし実際の通信で必ずしもBasic認証が使われると限らない
@@ -58,7 +59,11 @@ func NewClient(sa saclient.ClientAPI) (*v1.Client, error) {
 	if err != nil {
 		return nil, NewError("NewClientWithApiUrl", err)
 	}
-	v1Client, err := v1.NewClient(client.ServerURL(), DummySecuritySource{}, v1.WithClient(client))
+	apiUrl := client.ServerURL()
+	if apiUrl == "" {
+		apiUrl = DefaultAPIRootURL
+	}
+	v1Client, err := v1.NewClient(apiUrl, DummySecuritySource{}, v1.WithClient(client))
 	if err != nil {
 		return nil, NewError("NewClientWithApiUrl", err)
 	}
