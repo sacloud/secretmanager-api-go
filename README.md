@@ -29,7 +29,7 @@ func main() {
 	}
 
 	ctx := context.Background()
-	keyId := os.Getenv("SAKURACLOUD_KMS_KEY_ID") // コンパネやkms-api-goなどで取得
+	keyId := os.Getenv("SAKURA_KMS_KEY_ID") // コンパネやkms-api-goなどで取得
 	vaultOp := sm.NewVaultOp(client)
 
 	vault, err := vaultOp.Create(ctx, v1.CreateVault{
