@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.3.1](https://github.com/sacloud/secretmanager-api-go/compare/v0.3.0...v0.3.1) - 2026-01-09
+- Update client by @repeatedly in https://github.com/sacloud/secretmanager-api-go/pull/38
+
 ## [v0.3.0](https://github.com/sacloud/secretmanager-api-go/compare/v0.2.1...v0.3.0) - 2025-12-25
 - ci: bump actions/checkout from 4 to 5 by @dependabot[bot] in https://github.com/sacloud/secretmanager-api-go/pull/15
 - go: bump github.com/stretchr/testify from 1.10.0 to 1.11.1 by @dependabot[bot] in https://github.com/sacloud/secretmanager-api-go/pull/18
