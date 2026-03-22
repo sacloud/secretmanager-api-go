@@ -24,8 +24,11 @@ import (
 	v1 "github.com/sacloud/secretmanager-api-go/apis/v1"
 )
 
-// DefaultAPIRootURL デフォルトのAPIルートURL
-const DefaultAPIRootURL = "https://secure.sakura.ad.jp/cloud/zone/tk1a/api/cloud/1.1"
+const (
+	// DefaultAPIRootURL デフォルトのAPIルートURL
+	DefaultAPIRootURL = "https://secure.sakura.ad.jp/cloud/zone/tk1a/api/cloud/1.1"
+	serviceKey        = "secretmanager"
+)
 
 // UserAgent APIリクエスト時のユーザーエージェント
 var UserAgent = fmt.Sprintf(
@@ -47,7 +50,13 @@ func (ss DummySecuritySource) BasicAuth(ctx context.Context, operationName v1.Op
 }
 
 func NewClient(sa saclient.ClientAPI) (*v1.Client, error) {
+	endpointConfig, err := sa.EndpointConfig()
+	if err != nil {
+		return nil, NewError("unable to load endpoint configuration", err)
+	}
+
 	resetter := sa.(saclient.ClientOptionAPI)
+
 	client, err := resetter.DupWith(
 		saclient.WithUserAgent(UserAgent),
 		// これはなにか:
@@ -59,10 +68,12 @@ func NewClient(sa saclient.ClientAPI) (*v1.Client, error) {
 	if err != nil {
 		return nil, NewError("NewClientWithApiUrl", err)
 	}
-	apiUrl := client.ServerURL()
-	if apiUrl == "" {
-		apiUrl = DefaultAPIRootURL
+
+	apiUrl := DefaultAPIRootURL
+	if ep, ok := endpointConfig.Endpoints[serviceKey]; ok && ep != "" {
+		apiUrl = ep
 	}
+
 	v1Client, err := v1.NewClient(apiUrl, DummySecuritySource{}, v1.WithClient(client))
 	if err != nil {
 		return nil, NewError("NewClientWithApiUrl", err)
