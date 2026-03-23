@@ -1,5 +1,10 @@
 # Changelog
 
+## [v0.4.0](https://github.com/sacloud/secretmanager-api-go/compare/v0.3.1...v0.4.0) - 2026-03-22
+- go: bump github.com/sacloud/saclient-go from 0.2.6 to 0.2.7 by @dependabot[bot] in https://github.com/sacloud/secretmanager-api-go/pull/42
+- ci: bump actions/checkout from 6.0.1 to 6.0.2 by @dependabot[bot] in https://github.com/sacloud/secretmanager-api-go/pull/43
+- Update endpoint config from env/profile by @to-shoji in https://github.com/sacloud/secretmanager-api-go/pull/56
+
 ## [v0.3.1](https://github.com/sacloud/secretmanager-api-go/compare/v0.3.0...v0.3.1) - 2026-01-09
 - Update client by @repeatedly in https://github.com/sacloud/secretmanager-api-go/pull/38
 
