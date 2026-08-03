@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.4.2](https://github.com/sacloud/secretmanager-api-go/compare/v0.4.1...v0.4.2) - 2026-08-03
+- update README for repository transition by @shyouhei in https://github.com/sacloud/secretmanager-api-go/pull/76
+
 ## [v0.4.1](https://github.com/sacloud/secretmanager-api-go/compare/v0.4.0...v0.4.1) - 2026-04-13
 - Remove api-client-go dependency by @repeatedly in https://github.com/sacloud/secretmanager-api-go/pull/64
 - ci: bump Songmu/tagpr from 1.9.0 to 1.18.1 by @dependabot[bot] in https://github.com/sacloud/secretmanager-api-go/pull/63

@@ -16,4 +16,4 @@
 // Please migrate to that module. This repository will be archived.
 package secretmanager
 
-const Version = "0.4.1"
+const Version = "0.4.2"
